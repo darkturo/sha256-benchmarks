@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 #
 # Depends: hyperfine
 #
@@ -87,10 +87,11 @@ benchmarker() {
 	fi
 	INPUT=$BASE_DIR/inputs/${INPUT}.in
 
-	RESULT_PATH=$RESULT_DIR/$RESULT_PREFIX-$NAME@$MACHINE.json
+	DATE=$(date +'%Y%m%d')
+	RESULT_PATH=$RESULT_DIR/${RESULT_PREFIX}-${NAME}@${MACHINE}_${DATE}.json
 	BENCHMARK="hyperfine -w $WARMUP -r $RUNS -n $NAME --export-json $RESULT_PATH"
 	echo "Running: $BENCHMARK '$COMMAND'"
-	$BENCHMARK -- "$COMMAND < $INPUT"
+	$BENCHMARK -S 'bash --norc' -- "$COMMAND < $INPUT"
 	echo "Benchmark results saved to $RESULT_PATH"
 }
 
