@@ -123,17 +123,12 @@ benchmarker() {
 		COMMAND=""
 		. $CONFIG
 	else
-		if [ -z "$COMMAND" ]; then
-			shift $((OPTIND -1))
-			COMMAND=$@
-		fi
+		echo "Error: Configuration file is required"
+		usage
+		exit 1
 	fi
 	if [ -z "$MACHINE" ]; then
 		MACHINE=$(hostname)
-	fi
-	if [ -z "$COMMAND" ]; then
-		echo "Error: Please provide the command to run"
-		exit 1
 	fi
 	if [ -z "$NAME" ]; then
 		NAME=$(echo $COMMAND | cut -d " " -f 1)
@@ -143,7 +138,7 @@ benchmarker() {
 	fi
 	INPUT=$BASE_DIR/inputs/${INPUT}.in
 
-	TYPE=`get_field_from_config TYPE $CONFIG`
+	TYPE=$(get_field_from_config TYPE $CONFIG)
 
 	DATE=$(date +'%Y%m%d')
 	RESULT_PATH=$RESULT_DIR/${RESULT_PREFIX}-${NAME}-${TYPE}@${MACHINE}_${DATE}.json
@@ -153,7 +148,7 @@ benchmarker() {
 			run_shell $WARMUP $RUNS $NAME $INPUT $RESULT_PATH $COMMAND
 			;;
 		python)
-			SETUP=`get_field_from_config SETUP $CONFIG`
+			SETUP=$(get_field_from_config SETUP $CONFIG)
 			run_python $WARMUP $RUNS $NAME $SETUP $INPUT $RESULT_PATH $COMMAND
 			;;
 		bin)
