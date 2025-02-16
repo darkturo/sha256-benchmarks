@@ -5,7 +5,7 @@
 
 BASE_DIR=$(git rev-parse --show-toplevel)
 
-RESULT_PREFIX="benchmark-shell"
+RESULT_PREFIX="benchmark"
 WARMUP=5
 RUNS=1000
 INPUT=abc
@@ -28,12 +28,68 @@ usage() {
 	echo "  $0 -n 'openssl-custom' -i abc -- openssl dgst -sha256"
 }
 
+get_field_from_config() {
+	FIELD=$1
+	CONFIG=$2
+	RES=$(grep -E "^$FIELD=" $CONFIG | cut -d "=" -f 2)
+	if [ -z "$RES" ]; then
+		RES="undefined"
+	fi
+	echo $RES
+}
+
+run_shell() {
+	WARMUP=$1
+	RUNS=$2
+	NAME=$3
+	INPUT=$4
+	RESULT_PATH=$5
+	COMMAND=$6
+
+	BENCHMARK="hyperfine -w $WARMUP -r $RUNS -n $NAME --export-json $RESULT_PATH"
+	echo "Running: $BENCHMARK '$COMMAND'"
+	$BENCHMARK -S 'bash --norc' -- "$COMMAND < $INPUT"
+	echo "Benchmark results saved to $RESULT_PATH"
+}
+
+run_python() {
+	WARMUP=$1
+	RUNS=$2
+	NAME=$3
+	SETUP=$4
+	INPUT=$5
+	RESULT_PATH=$6
+	COMMAND=$7
+
+	PERF_OUT=pyperf-$NAME.json
+	BENCHMARK="""python -m pyperf timeit -s '$SETUP' 'digest("`cat $INPUT`")' -o $PERF_OUT"""
+	echo "Running: $BENCHMARK '$COMMAND'"
+	$BENCHMARK -S 'bash --norc' -- "$COMMAND < $INPUT"
+	echo "Benchmark results saved to $RESULT_PATH"
+}
+
+run_bin() {
+	WARMUP=$1
+	RUNS=$2
+	NAME=$3
+	INPUT=$4
+	RESULT_PATH=$5
+	COMMAND=$6
+
+	BENCHMARK="$COMMAND --warmup $WARMUP --iterations $RUNS --input $INPUT --output $RESULT_PATH"
+	echo "Running: $BENCHMARK"
+	$BENCHMARK
+	echo "Benchmark results saved to $RESULT_PATH"
+}
+
 benchmarker() {
+	echo "********************************************************"
 	RESULT_DIR=results
 	if [ -n "$BASE_DIR" ]; then
 		RESULT_DIR=$BASE_DIR/$RESULT_DIR
 	fi
 
+	echo "CMD: $0 $@"
 	while getopts "c:w:r:i:n:m:h" opt; do
 		case $opt in
 			c) CONFIG=$OPTARG
@@ -52,7 +108,7 @@ benchmarker() {
 				usage
 				exit 0
 				;;
-			\?) 
+			*) 
 				echo "Invalid option -$OPTARG" >&2
 				usage
 				exit 1
@@ -87,12 +143,27 @@ benchmarker() {
 	fi
 	INPUT=$BASE_DIR/inputs/${INPUT}.in
 
+	TYPE=`get_field_from_config TYPE $CONFIG`
+
 	DATE=$(date +'%Y%m%d')
-	RESULT_PATH=$RESULT_DIR/${RESULT_PREFIX}-${NAME}@${MACHINE}_${DATE}.json
-	BENCHMARK="hyperfine -w $WARMUP -r $RUNS -n $NAME --export-json $RESULT_PATH"
-	echo "Running: $BENCHMARK '$COMMAND'"
-	$BENCHMARK -S 'bash --norc' -- "$COMMAND < $INPUT"
-	echo "Benchmark results saved to $RESULT_PATH"
+	RESULT_PATH=$RESULT_DIR/${RESULT_PREFIX}-${NAME}-${TYPE}@${MACHINE}_${DATE}.json
+
+	case $TYPE in 
+		shell)
+			run_shell $WARMUP $RUNS $NAME $INPUT $RESULT_PATH $COMMAND
+			;;
+		python)
+			SETUP=`get_field_from_config SETUP $CONFIG`
+			run_python $WARMUP $RUNS $NAME $SETUP $INPUT $RESULT_PATH $COMMAND
+			;;
+		bin)
+			run_bin $WARMUP $RUNS $NAME $INPUT $RESULT_PATH $COMMAND
+			;;
+		*)
+			echo "Error: Unsupported benchmark type $TYPE"
+			exit 1
+			;;
+	esac
 }
 
 if [ "$0" = "$BASH_SOURCE" ]; then
