@@ -5,15 +5,6 @@
 
 BASE_DIR=$(git rev-parse --show-toplevel)
 
-RESULT_PREFIX="benchmark"
-WARMUP=5
-RUNS=1000
-INPUT=abc
-CONFIG=""
-NAME=""
-MACHINE=""
-COMMAND=""
-
 usage() {
 	echo "Usage: $0 [OPTIONS] {-c <config>|<command>}"
 	echo "Options:"
@@ -83,13 +74,20 @@ run_bin() {
 }
 
 benchmarker() {
-	echo "********************************************************"
+	RESULT_PREFIX="benchmark"
+	WARMUP=5
+	RUNS=1000
+	INPUT=abc
+	CONFIG=""
+	NAME=""
+	MACHINE=""
+	COMMAND=""
+
 	RESULT_DIR=results
 	if [ -n "$BASE_DIR" ]; then
 		RESULT_DIR=$BASE_DIR/$RESULT_DIR
 	fi
 
-	echo "CMD: $0 $@"
 	while getopts "c:w:r:i:n:m:h" opt; do
 		case $opt in
 			c) CONFIG=$OPTARG
