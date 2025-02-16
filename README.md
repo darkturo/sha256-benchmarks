@@ -31,9 +31,10 @@ Top 10 so far:
 
 | Library or Tool                 | Average Run Time (1 hash) | Hashrate (H/s) |
 |---------------------------------|---------------------------|----------------|
-| Linux coreutils sha256sum       | 0.000557760 s             | 896 H/s        |
-| OpenSSL sha256                  | 0.002786817 s             | 179 H/s        |
-| shasum                          | 0.014404122 s             |  35 H/s        |
+| Hashlib (python)                | 0.000000005220000000 s    |  95.79 GH/s    |
+| Linux coreutils sha256sum       | 0.000642492268000000 s    | 778.21  H/s    |
+| OpenSSL sha256                  | 0.002975225151000002 s    | 168.05  H/s    |
+| shasum                          | 0.014810544855000007 s    |  33.75  H/s    |
 
 
 NOTE: In Bitcoin the hashrate measures the number of double-hashes per second a
