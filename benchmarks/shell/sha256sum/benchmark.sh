@@ -1,4 +1,5 @@
 #!/bin/bash
+. ../benchmarker.sh
 
-WARMUP=5
-hyperfine -N --warmup $WARMUP 'sha256sum ../../../inputs/abc' --export-json result-benchmark-sha256sum.json
+NAME=$(sha256sum --version | head -1 | sed 's/ (GNU coreutil s) /-/')
+benchmarker -n $NAME -i abc -- sha256sum 

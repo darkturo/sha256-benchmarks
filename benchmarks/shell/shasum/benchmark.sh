@@ -1,4 +1,5 @@
 #!/bin/bash
+. ../benchmarker.sh
 
-WARMUP=5
-hyperfine -N --warmup $WARMUP 'shasum -a 256 ../../../inputs/abc' --export-json result-benchmark-shasum.json
+NAME=shasum-$(shasum -v)
+benchmarker -n $NAME -i abc -- shasum -a 256

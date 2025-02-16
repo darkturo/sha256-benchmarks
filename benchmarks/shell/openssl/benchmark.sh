@@ -1,4 +1,6 @@
 #!/bin/bash
+. ../benchmarker.sh
 
-WARMUP=5
-hyperfine -N --warmup $WARMUP 'openssl dgst -sha256 ../../../inputs/abc' --export-json result-benchmark-openssl.json
+NAME=$(openssl version | cut -d" " -f1,2 | sed 's/ /-/')
+
+benchmarker -n $NAME -i abc -- openssl dgst -sha256 

@@ -1,2 +1,0 @@
-sha256sum (GNU coreutils) 9.1
-hyperfine 1.15.0

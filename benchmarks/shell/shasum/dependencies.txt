@@ -1,2 +1,0 @@
-shasum 6.02
-hyperfine 1.15.0

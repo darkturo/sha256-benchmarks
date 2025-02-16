@@ -1,2 +1,0 @@
-openssl 3.0.14
-hyperfine 1.15.0
