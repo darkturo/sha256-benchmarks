@@ -1,34 +1,45 @@
 # sha256 benchmarks
 
-A repo with benchmarks of different sha256 implementations.
+Benchmarks of different sha256 implementations.
 
-## Introduction
+## Motivation
 
 I've been curious about where do sha256 implementations stand in terms of
 performance on either CPU and GPU for a while. I'm aware that this is not a new
-question, and that is majorly accepted that ASICs and FPGAs can do best. With
-the craze of Bitcoin mining, the performance of hardware accelerated sha256
-implementations has been improving every year, to get to the current state
-where they can compute hashes in the order of Terahashes per second.
+question, and that is majorly accepted that ASICs and FPGAs can do the best in 
+this terrain (We talk hundreds of Terahashes per second).
 
-And despite I've been looking around my question is still unanswered; How many
-hashes (double hashes) can we compute per second with a current CPU or GPU?
+I've been looking around for an answer to my question but haven't been very
+lucky. How many hashes (double hashes) can we compute per second with a current
+CPU or GPU?  ...
 
-So I have decided to find out myself, although I do not intend this to be a
-reference project, nor an exhaustive benchmark. I'm also aware that this
-endeavor may end being just a waste of time, but hey, other people go fishing
-on weekends, I'm just a curious cat looking for an answer.
+So I have decided to find out myself. 
+
+**DISCLAIMER**: I do not intend to provide an exhaustive benchmark here, this is
+project is fueled by curiosity and spare time.
 
 
 ## Findings
 
-Well, I haven't run any benchmark yet, but the idea is to place here some
-summary with my findings, nothing fancy.
-
 As mentioned, I have found attempts to answer this question on the Internet,
-and all of the few answers I found let the question with a vague answer, and in
-many cases showing discouraging numnbers: 65,139 H/s [^1]. 
+and so far the answers were vague or had rather discouraging[^1] numbers: 65,139 H/s.
 
+ASIC Bitcoin miners hashrates today are in the order of TH/s, let's see how far
+can we get with a CPU or GPU.
+
+Top 10 so far:
+
+| Library or Tool                 | Average Run Time (1 hash) | Hashrate (H/s) |
+|---------------------------------|---------------------------|----------------|
+| Linux coreutils sha256sum       | 0.000557760 s             | 896 H/s        |
+| OpenSSL sha256                  | 0.002786817 s             | 179 H/s        |
+| shasum                          | 0.014404122 s             |  35 H/s        |
+
+
+NOTE: In Bitcoin the hashrate measures the number of double-hashes per second a
+miner can compute [^2].
+
+For more benchmarks check out this: [Benchmarks](Benchmarks.md) !
 
 ## The Repo
 
