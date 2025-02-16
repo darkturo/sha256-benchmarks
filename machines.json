@@ -1,0 +1,33 @@
+{
+	"__comment": "This is just a json with the specs of the machines I have used for the benchmarks",
+	"machines": {
+		"billy": {
+			"cpu": {
+				"model": "Intel(R) Core(TM) i7-8565U",
+				"base_clock": "1.80GHz",
+				"cores": 4,
+				"threads": 8
+			},
+			"ram": "12GB",
+			"gpu": {
+				"model": "NVIDIA GeForce GTX 1650",
+				"vram": "4GB"
+			},
+			"os": {
+				"name": "Ubuntu",
+				"version": "20.04",
+				"type": "Linux",
+				"virtualized": true,
+				"virtualization": "WSL2",
+				"base_os": "Windows 10"
+			},
+			"disk": {
+				"type": "SSD",
+				"size": "1TB",
+				"read_speed": "1800MB/s",
+				"write_speed": "1800MB/s",
+				"model": "INTEL SSDPEKKW010T8L"
+			}
+		}
+	}
+}
