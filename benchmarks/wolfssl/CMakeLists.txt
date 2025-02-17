@@ -9,6 +9,10 @@ find_package(Boost REQUIRED COMPONENTS filesystem system)
 
 add_executable(wolfsha256 main.cc)
 
+if (VERBOSE)
+	add_compile_definitions(wolfsha256 ENABLE_STDOUT_DEBUG=1)
+endif()
+
 target_link_libraries(wolfsha256
 	PRIVATE
 	Folly::folly Folly::follybenchmark
