@@ -24,22 +24,25 @@ get_field_from_config() {
 	CONFIG=$2
 	RES=$(grep -E "^$FIELD=" $CONFIG | cut -d "=" -f 2-)
 	if [ -z "$RES" ]; then
-		RES="undefined"
+		RES=""
+	fi 
+	if [[ "$RES" =~ '$(' ]]; then
+		eval "RES=$RES"
 	fi
 	echo $RES
 }
 
 run_shell() {
-	WARMUP=$1
-	RUNS=$2
-	NAME=$3
-	INPUT=$4
-	RESULT_PATH=$5
-	COMMAND=$6
+	WARMUP=$1; shift
+	RUNS=$1; shift
+	NAME=$1; shift
+	INPUT=$1; shift
+	RESULT_PATH=$1; shift
+	COMMAND=$(echo $* | sed -e 's/^"//g' -e 's/"$//g')
 
-	BENCHMARK="hyperfine -w $WARMUP -r $RUNS -n $NAME --export-json $RESULT_PATH"
 	echo "Benchmarking $NAME with hyperfine"
-	$BENCHMARK -S 'bash --norc' -- "$COMMAND < $INPUT"
+	echo "Command: $COMMAND"
+	hyperfine -w $WARMUP -r $RUNS --command-name $"$NAME" --export-json $RESULT_PATH -S 'bash --norc' -- "$COMMAND < $INPUT"
 	echo "Benchmark results saved to $RESULT_PATH"
 }
 
@@ -70,7 +73,12 @@ run_bin() {
 	RESULT_PATH=$5
 	COMMAND=$6
 
-	BENCHMARK="$COMMAND --warmup $WARMUP --iterations $RUNS --input $INPUT --output $RESULT_PATH"
+	if [ ! -f "$COMMAND" ]; then
+		echo "Shell script '$COMMAND' not found. Please run cmake and build the binay benchmarks first."
+	fi
+
+#	BENCHMARK="$COMMAND --warmup $WARMUP --iterations $RUNS --input $INPUT --output $RESULT_PATH"
+	BENCHMARK="$COMMAND --input $INPUT --output $RESULT_PATH"
 	echo "Running: $BENCHMARK"
 	$BENCHMARK
 	echo "Benchmark results saved to $RESULT_PATH"
@@ -125,10 +133,15 @@ benchmarker() {
 		TYPE=$(get_field_from_config TYPE $CONFIG)
 		INPUT=$(get_field_from_config INPUT $CONFIG)
 		COMMAND=$(get_field_from_config COMMAND $CONFIG)
+		SKIP=$(get_field_from_config SKIP $CONFIG)
 	else
 		echo "Error: Configuration file is required"
 		usage
 		exit 1
+	fi
+	if [ -n "$SKIP" -a "$SKIP" != "undefined" ]; then
+		echo "Skipping benchmark $NAME"
+		exit 0
 	fi
 	if [ -z "$MACHINE" ]; then
 		MACHINE=$(hostname)
@@ -153,7 +166,7 @@ benchmarker() {
 			run_python $WARMUP $RUNS $NAME $INPUT $RESULT_PATH $"$SETUP" $"$COMMAND"
 			;;
 		bin)
-			run_bin $WARMUP $RUNS $NAME $INPUT $RESULT_PATH $COMMAND
+			run_bin $WARMUP $RUNS $NAME $SKIP $INPUT $RESULT_PATH $COMMAND
 			;;
 		*)
 			echo "Error: Unsupported benchmark type $TYPE"
