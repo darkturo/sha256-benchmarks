@@ -79,7 +79,7 @@ run_bin() {
 	fi
 
 #	BENCHMARK="$COMMAND --warmup $WARMUP --iterations $RUNS --input $INPUT --output $RESULT_PATH"
-	BENCHMARK="$COMMAND --input $INPUT --output $RESULT_PATH"
+	BENCHMARK="$COMMAND -input $INPUT -bm_json_verbose $RESULT_PATH"
 	echo "Running: $BENCHMARK"
 	$BENCHMARK
 	echo "Benchmark results saved to $RESULT_PATH"
