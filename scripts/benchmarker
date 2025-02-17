@@ -71,7 +71,8 @@ run_bin() {
 	NAME=$3
 	INPUT=$4
 	RESULT_PATH=$5
-	COMMAND=$6
+	COMMAND_LOCATION=$6
+	COMMAND=$COMMAND_LOCATION/$7
 
 	if [ ! -f "$COMMAND" ]; then
 		echo "Shell script '$COMMAND' not found. Please run cmake and build the binay benchmarks first."
@@ -166,7 +167,8 @@ benchmarker() {
 			run_python $WARMUP $RUNS $NAME $INPUT $RESULT_PATH $"$SETUP" $"$COMMAND"
 			;;
 		bin)
-			run_bin $WARMUP $RUNS $NAME $SKIP $INPUT $RESULT_PATH $COMMAND
+			COMMAND_LOCATION=$(dirname $CONFIG)
+			run_bin $WARMUP $RUNS $NAME $SKIP $INPUT $RESULT_PATH $COMMAND_LOCATION $COMMAND
 			;;
 		*)
 			echo "Error: Unsupported benchmark type $TYPE"
