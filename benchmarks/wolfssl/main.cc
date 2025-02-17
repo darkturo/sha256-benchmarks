@@ -12,20 +12,28 @@ DEFINE_string(input, "", "File containing the string to be hashed");
 
 std::string message;
 
-BENCHMARK(woflssl_sha256, n) {
+BENCHMARK(wolfssl_sha256, n) {
     byte hash[WC_SHA256_DIGEST_SIZE];
-    wc_Sha256 sha256;
-
-    wc_InitSha256(&sha256);
-    wc_Sha256Update(&sha256, reinterpret_cast<const byte*>(message.c_str()), message.size());
-    wc_Sha256Final(&sha256, hash);
 
 
-    std::cout << "SHA-256 hash of \"" << message << "\": ";
-    for (int i = 0; i < WC_SHA256_DIGEST_SIZE; ++i) {
-	std::cout << std::hex << std::setfill('0') << std::setw(2) << static_cast<int>(hash[i]);
+    for (int i = 0; i < n; ++i) {
+        wc_Sha256 sha256;
+
+        wc_InitSha256(&sha256);
+        wc_Sha256Update(&sha256, reinterpret_cast<const byte*>(message.c_str()), message.size());
+        wc_Sha256Final(&sha256, hash);
+
+
+#ifdef ENABLE_STDOUT_DEBUG
+        std::cout << "SHA-256 hash of \"" << message << "\": ";
+        for (int i = 0; i < WC_SHA256_DIGEST_SIZE; ++i) {
+            std::cout << std::hex << std::setfill('0') << std::setw(2) << static_cast<int>(hash[i]);
+        }
+        std::cout << std::endl;
+#else
+        folly::doNotOptimizeAway(hash);
+#endif
     }
-    std::cout << std::endl;
 }
 
 int main(int argc, char **argv) {
@@ -33,7 +41,7 @@ int main(int argc, char **argv) {
     gflags::ParseCommandLineFlags(&argc, &argv, true);
 
     if (FLAGS_input.empty()) {
-	std::cerr << "Please provide a string to be hashed with -c flag" << std::endl;
+	std::cerr << "Use the '-help' option to see how to run this" << std::endl;
 	return 1;
     }
 
