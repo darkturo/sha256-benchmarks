@@ -1,6 +1,6 @@
 # sha256 benchmarks
 
-Benchmarks of different sha256 implementations.
+Benchmarking SHA-256 implementations for CPU on GNU/Linux.
 
 ## Motivation
 
@@ -21,13 +21,11 @@ project is fueled by curiosity and spare time.
 
 ## Findings
 
-As mentioned, I have found attempts to answer this question on the Internet,
-and so far, the answers were vague or had rather discouraging[^1] numbers: 65,139 H/s.[^3]
+ASIC miners today have hashrates in the order of TH/s, this is, they can calculate
+trillion of double Sha256s (SHA-256d [^sha256-d]) per second[^btc-lingo]! 
+Let's find out how far can we get on a CPU/GPU![^machine]
 
-ASIC Bitcoin miners hashrates today are in the order of TH/s, let's see how far
-can we get on a CPU/GPU!
-
-Top 10 so far:
+### The top 10 (so far):
 
 | Library or Tool                 | Average Run Time (1 hash) | Hashrate (H/s) | Machine          |
 |---------------------------------|---------------------------|----------------|------------------|
@@ -38,24 +36,68 @@ Top 10 so far:
 | shasum                          | 0.014810544855000007 s    |  33.75  H/s    | Intel i7 1.8 GHz |
 
 
-NOTE: In Bitcoin lingo, the hashrate measures the number of double-hashes per second a
-miner can compute [^2].
 
 For more benchmarks, check out this: [Benchmarks](Benchmarks.md)!
 
-## The Repo
+## This Repository
 
-The repo is organized as follows
+The repo is organized as follows:
 
-benchmarks  - Directory containing the programs for the different implementations I'm testing
-results     - Directory containing logs and summaries of the benchmarks I've run.
-README.md   - This file
+benchmarks  - Contains both setups and programs to benchmark different implementations. I use hyperfine, 
+              pyperf, and custom c++ programs (using Folly) to run the benchmarks.
+results     - Contains logs in json of the benchmarks I've run. These are produced by the different benchmarking
+              tools I've used, and they may not contain the same info. I plan to work on a script to parse them
+              and generate interesting information.
+input       - Contains input file(s) used as input for sha256 algorithms. 
+              At the moment I'm just using "abc" as input (abc.in).
+scripts     - Contains a simple script in bash to run the different benchmarks.
+README.md   - This file.
+
+## Running the Benchmarks
+
+### Prerequisites
+To run the benchmarks, make sure you have installed in your system the tools listed in the `dependencies.md` 
+file in the root directory. I have run this on GNU/Linux (Ubuntu 20.04) so the instructions are for this 
+distro, but you could find the packages for yours or compile them from source to make it work in your case.
+
+### Compiling the C++ programs
+This is straightforward as long as you have installed all the necessary libraries (see prerequisites).
+
+On a terminal (or from your favorite IDE), use the root CMakeLists.txt available in benchmarks:
+```bash
+cd benchmarks
+cmake -B build
+cmake --build build
+```
+
+And you should be done!
+
+### Running the Benchmarks
+To run the benchmarks, you can use the `benchmark_all_tools.sh`:
+
+```bash
+cd benchmarks
+./benchmark_all_tools.sh
+```
+
+After a series of logs will be generated and placed in the `results` directory.
+
+### Running a specific benchmark
+It is also possible to run just one benchmark for a specific library or command.
+For example if I were to run the benchmark for `shasum`, I would just do as follows:
+
+```bash
+cd benchmarks
+../scripts/benchmarker -c shasum
+```
+
+The result will be placed also in the `results` directory.
 
 
---
 
-[1] Question at stack overflow https://stackoverflow.com/questions/4764026/how-many-sha256-hashes-can-a-modern-computer-compute from 2012.
+[^machine]: I'm running these tests on my laptop, a modest on from 2022. But will run these on a more 
+    current machine in the near future.
 
-[2] https://bitcoin.stackexchange.com/questions/110056/how-many-sha256-hashes-can-a-single-thread-compute
+[^sha256-d]: https://bitcoinwiki.org/wiki/sha-256d
 
-[3] The answer may fall short today. I have run some benchmarks with a 2022 laptop, and just with Python's `hashlib`, I could reach 95 GH/s, way beyond the 65 MH/s from the answer! I'm impressed by Python's performance in this case, and I'm sure that other C++ libraries will kick ass! 🫏 So I'm looking forward to find out when to find the time. Also, I'm enthusiastic to have an answer!
+[^btc-lingo]: https://bitcoin.stackexchange.com/questions/110056/how-many-sha256-hashes-can-a-single-thread-compute

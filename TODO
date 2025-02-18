@@ -2,11 +2,11 @@ TODO
 ====
 
 [ ] make a script to generate the content for Benchmarks.md
+[x] benchmark wolfssl sha256 impl
 [ ] benchmark openssl c++ impl
 [ ] benchmark bitcoin's core c++ sha256 impl 
 [ ] benchmark bitcoin's cli sha256 (if avail)
 [ ] benchmark golang sha...
-[ ] benchmark the slack overflow quick impl to measure
 [ ] benchmark brute's implementation
 [ ] benchmark shake's implementation
 [ ] Find other libraries or programs to benchmark
