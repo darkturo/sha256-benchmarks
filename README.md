@@ -37,7 +37,7 @@ Let's find out how far can we get on a CPU/GPU![^machine]
 
 
 
-For more benchmarks, check out this: [Benchmarks](Benchmarks.md)!
+For more benchmarks, check out this: [Benchmarks](docs/Benchmarks.md)!
 
 ## This Repository
 
@@ -50,14 +50,17 @@ results     - Contains logs in json of the benchmarks I've run. These are produc
               and generate interesting information.
 input       - Contains input file(s) used as input for sha256 algorithms. 
               At the moment I'm just using "abc" as input (abc.in).
+docs        - Markdown stuff, some of it referenced from this README.
 scripts     - Contains a simple script in bash to run the different benchmarks.
 README.md   - This file.
 
 ## Running the Benchmarks
 
 ### Prerequisites
-To run the benchmarks, make sure you have installed in your system the tools listed in the `dependencies.md` 
-file in the root directory. I have run this on GNU/Linux (Ubuntu 20.04) so the instructions are for this 
+To run the benchmarks, make sure you have installed in your system the tools listed in the 
+[dependencies](docs/Dependencies.md).  
+
+I have run this on GNU/Linux (Ubuntu 20.04) so the instructions are for this 
 distro, but you could find the packages for yours or compile them from source to make it work in your case.
 
 ### Compiling the C++ programs
@@ -95,8 +98,8 @@ The result will be placed also in the `results` directory.
 
 
 
-[^machine]: I'm running these tests on my laptop, a modest on from 2022. But will run these on a more 
-    current machine in the near future.
+[^machine]: I'm running these tests on my laptop, a modest Lenovo model from 2020, on a virtualized Linux. 
+            But I plan to run these on a more current native GNU/Linux machine in the near future.
 
 [^sha256-d]: https://bitcoinwiki.org/wiki/sha-256d
 
