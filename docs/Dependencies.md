@@ -17,6 +17,7 @@ Among the tools you'll need to run the benchmarks are:
 - openssl: The open-source implementation of the SSL and TLS protocols.
 - coreutils: sha256sum is part of this package. This is very likely part of your setup already.
 - perl: Apparently shasum comes with the perl package, at least in Ubuntu, so probably you have it already.
+- pkg-config: A helper tool to manage libraries and include paths.
 
 ## Libraries
 
@@ -31,4 +32,4 @@ The following is the list of libraries you'll need to compile the programs
 | double-conversion | libdouble-conversion-dev | https://github.com/google/double-conversion  |
 | google-glog       | libgoogle-glog-dev       | https://google.github.io/glog                |
 | wolfssl           | libwolfssl-dev           | https://www.wolfssl.com/                     |
-| libopenssl-dev    | libopenssl-dev           | https://www.openssl.org/                     |   
+| libopenssl-dev    | libopenssl-dev           | https://www.openssl.org/                     |

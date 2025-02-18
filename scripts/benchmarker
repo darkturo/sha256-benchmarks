@@ -140,7 +140,7 @@ benchmarker() {
 		usage
 		exit 1
 	fi
-	if [ -n "$SKIP" -a "$SKIP" != "undefined" ]; then
+	if [ -n "$SKIP" -a "$SKIP" != "NO" ]; then
 		echo "Skipping benchmark $NAME"
 		exit 0
 	fi
