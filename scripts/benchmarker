@@ -69,10 +69,11 @@ run_bin() {
 	WARMUP=$1
 	RUNS=$2
 	NAME=$3
-	INPUT=$4
-	RESULT_PATH=$5
-	COMMAND_LOCATION=$6
-	COMMAND=$COMMAND_LOCATION/$7
+    SKIP=$4
+	INPUT=$5
+	RESULT_PATH=$6
+	COMMAND_LOCATION=$7
+	COMMAND=$COMMAND_LOCATION/$8
 
 	if [ ! -f "$COMMAND" ]; then
 		echo "Shell script '$COMMAND' not found. Please run cmake and build the binay benchmarks first."
