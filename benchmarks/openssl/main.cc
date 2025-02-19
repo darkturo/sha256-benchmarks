@@ -10,7 +10,7 @@ DEFINE_string(input, "", "File containing the string to be hashed");
 
 std::string message;
 
-BENCHMARK(wolfssl_sha256, n) {
+BENCHMARK(openssl_sha256, n) {
     unsigned char hash[EVP_MAX_MD_SIZE];
     unsigned int hash_len;
 
