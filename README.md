@@ -29,11 +29,12 @@ Let's find out how far can we get on a CPU/GPU![^machine]
 
 | Library or Tool                 | Average Run Time (1 hash) | Hashrate (H/s) | Machine          |
 |---------------------------------|---------------------------|----------------|------------------|
-| Hashlib (python)                | 0.000000005220000000 s    | 95.79  GH/s    | Intel i7 1.8 GHz |
-| WolfSSL sha256                  | 0.000000208375930786 s    | 2.40   MH/s    | Intel i7 1.8 GHz |
-| OpenSSL sha256                  | 0.000000474000930786 s    | 1.05   MH/s    | Intel i7 1.8 GHz |
-| Linux coreutils sha256sum       | 0.000642492268000000 s    | 778.21  H/s    | Intel i7 1.8 GHz |
-| OpenSSL sha256 (CLI)            | 0.002975225151000002 s    | 168.05  H/s    | Intel i7 1.8 GHz |
+| Hashlib (python)                | 0.000000005220000000 s    | 95.79 GH/s     | Intel i7 1.8 GHz |
+| WolfSSL sha256                  | 0.000000208375930786 s    | 2.40  MH/s     | Intel i7 1.8 GHz |
+| Crypto++ sha256                 | 0.000000257899368286 s    | 1.94  MH/s     | Intel i7 1.8 GHz |
+| OpenSSL sha256                  | 0.000000474000930786 s    | 1.05  MH/s     | Intel i7 1.8 GHz |
+| Linux coreutils sha256sum       | 0.000642492268000000 s    | 778.21   H/s   | Intel i7 1.8 GHz |
+| OpenSSL sha256 (CLI)            | 0.002975225151000002 s    | 168.05   H/s   | Intel i7 1.8 GHz |
 | shasum                          | 0.014810544855000007 s    | 33.75   H/s    | Intel i7 1.8 GHz |
 
 
