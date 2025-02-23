@@ -12,7 +12,7 @@ DEFINE_string(input, "", "File containing the string to be hashed");
 
 std::string message;
 
-BENCHMARK(openssl_sha256, n) {
+BENCHMARK(cryptopp_sha256, n) {
     CryptoPP::byte digest[CryptoPP::SHA256::DIGESTSIZE];
     CryptoPP::SHA256 hash;
 
