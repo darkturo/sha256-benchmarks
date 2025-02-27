@@ -10,6 +10,10 @@ find_package(Boost REQUIRED COMPONENTS filesystem system)
 set(PROG_NAME bitcoin-sha256-bench)
 add_executable(${PROG_NAME} main.cc)
 
+set_target_properties(${PROG_NAME} PROPERTIES
+    BUILD_RPATH "/usr/local/lib"
+)
+
 if (VERBOSE)
 	add_compile_definitions(${PROG_NAME} ENABLE_STDOUT_DEBUG=1)
 endif()
