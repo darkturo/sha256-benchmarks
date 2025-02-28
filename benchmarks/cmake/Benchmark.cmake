@@ -11,6 +11,9 @@ function(build_benchmark Name)
     find_package(Boost REQUIRED COMPONENTS filesystem system)
 
     add_executable(${Name} main.cc)
+    set_target_properties(${Name} PROPERTIES
+            BUILD_RPATH "/usr/local/lib"
+    )
 
     if (VERBOSE)
         add_compile_definitions(${Name} ENABLE_STDOUT_DEBUG=1)
