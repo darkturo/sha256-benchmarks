@@ -23,11 +23,9 @@ namespace benchmark {
     public:
         typedef void hash_fun_type(const std::string &message, T *digest);
 
-        digest_trait(hash_fun_type *fun) : hash_fun(fun) {}
+        digest_trait(hash_fun_type *fun) : hash(fun) {}
 
-        void hash(const std::string &message, T *digest) {
-            hash_fun(message, digest);
-        }
+        hash_fun_type *hash;
 
         void print(T *digest) {
             std::cout << "SHA-256 hash of \"" << message << "\": ";
@@ -36,8 +34,6 @@ namespace benchmark {
             }
             std::cout << std::endl;
         }
-    private:
-        hash_fun_type *hash_fun;
     };
 
     template <ByteType T,
@@ -74,3 +70,4 @@ namespace benchmark {
         return 0;
     }
 }
+
