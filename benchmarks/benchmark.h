@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <fmt/core.h>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -71,3 +72,20 @@ namespace benchmark {
     }
 }
 
+#define BENCH(digest_func, byte_type, digest_size)                         \
+        BENCHMARK(digest_func, n) {                                        \
+            benchmark::bechmarker<byte_type, digest_size>(digest_func, n); \
+        }
+
+#define MAIN(name) \
+    int main(int argc, char **argv) {                        \
+        std::string usage = #name;                           \
+        usage += " SHA256 benchmark";                        \
+        gflags::SetUsageMessage(usage);                      \
+        gflags::ParseCommandLineFlags(&argc, &argv, true);   \
+        return benchmark::run();                             \
+    }
+
+#define BENCH_MAIN(digest_func, byte_type, digest_size) \
+        BENCH(digest_func, byte_type, digest_size)      \
+        MAIN(digest_func)
