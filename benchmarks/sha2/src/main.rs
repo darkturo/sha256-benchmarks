@@ -1,5 +1,5 @@
 use sha2::{Digest, Sha256};
-use std::{env, fs, fs::File, io::Write, time::Instant};
+use std::{env, fs, fs::File, path::PathBuf, io::Write, time::Instant};
 use serde_json::json;
 
 
@@ -84,7 +84,7 @@ fn main() {
     if args.json_file != "" {
         let json_output = json!([
             [
-                file!(),
+                PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(file!()),
                 "rust_sha256",
                 avg_time
             ]
