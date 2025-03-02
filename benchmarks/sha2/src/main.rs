@@ -91,7 +91,8 @@ fn main() {
         ]);
 
         let mut file = File::create(&args.json_file).expect("Failed to create JSON file");
-        file.write_all(json_output.to_string().as_bytes()).expect("Failed to write JSON");
+        let pretty_json = serde_json::to_string_pretty(&json_output).expect("Failed to format JSON");
+        file.write_all(pretty_json.as_bytes()).expect("Failed to write JSON");
 
         println!("Benchmark results saved to {}", args.json_file);
     }
