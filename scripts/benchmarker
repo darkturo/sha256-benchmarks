@@ -52,14 +52,13 @@ run_python() {
 	NAME=$3
 	INPUT=$4
 	RESULT_PATH=$5
-	SETUP=$6
-	COMMAND=$7
+	eval SETUP=$6
+	eval COMMAND=$7
 
-	export INPUT
 	PERF_OUT=pyperf-$NAME.json
 	rm -f $PERF_OUT
 	echo "Benchmarking $NAME with pyperf"
-	python3 -m pyperf timeit --name $NAME --copy-env -o $PERF_OUT -s "$SETUP" "$COMMAND"
+	INPUT=$INPUT python3 -m pyperf timeit --name $NAME --copy-env -o $PERF_OUT -s "$SETUP" "$COMMAND"
 	pyperf stats $PERF_OUT
 	mv $PERF_OUT $RESULT_PATH
 	echo "Benchmark results saved to $RESULT_PATH"
