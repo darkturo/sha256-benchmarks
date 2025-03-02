@@ -29,7 +29,6 @@ Let's find out how far can we get on a CPU/GPU![^machine]
 
 | Library or Tool                 | Average Run Time (1 hash) | Hashrate (H/s) | Machine          |
 |---------------------------------|---------------------------|----------------|------------------|
-| Hashlib (python)                | 0.000000005220000000 s    | 95.79 GH/s     | Intel i7 1.8 GHz |
 | WolfSSL sha256                  | 0.000000208375930786 s    | 2.40  MH/s     | Intel i7 1.8 GHz |
 | Crypto++ sha256                 | 0.000000257899368286 s    | 1.94  MH/s     | Intel i7 1.8 GHz |
 | Bitcoin core's sha256           | 0.000000263093631744 s    | 1.90  MH/s     | Intel i7 1.8 GHz |
