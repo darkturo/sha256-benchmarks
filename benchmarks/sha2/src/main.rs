@@ -65,7 +65,7 @@ fn usage() {
 }
 
 fn main() {
-    let iterations = 1_000_000;
+    let iterations = 10_000_000;
 
     let args = parse_args(env::args().collect()).unwrap_or_else(|err| {
         eprintln!("Error parsing arguments: {}", err);
