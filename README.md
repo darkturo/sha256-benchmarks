@@ -31,17 +31,18 @@ Let's find out how far can we get on a CPU/GPU![^machine]
 
 ### The top 10 (so far):
 
-| Library or Tool           | Average Run Time (1 hash) | Hashrate (H/s) | Machine          | Program            |
-|---------------------------|---------------------------|----------------|------------------|--------------------|
-| WolfSSL sha256            | 0.000000208375930786 s    | 2.40   MH/s    | Intel i7 1.8 GHz | C++                |
-| Crypto++ sha256           | 0.000000257899368286 s    | 1.94   MH/s    | Intel i7 1.8 GHz | C++                |
-| Bitcoin core's sha256     | 0.000000263093631744 s    | 1.90   MH/s    | Intel i7 1.8 GHz | C++                |
-| Rust sha2 (sha256)        | 0.000000269746296400 s    | 1.85   MH/s    | Intel i7 1.8 GHz | Rust               |
-| OpenSSL sha256            | 0.000000474000930786 s    | 1.05   MH/s    | Intel i7 1.8 GHz | C++                |
-| Hashlib (python) sha256   | 0.000000583000000000 s    | 857.63 KH/s    | Intel i7 1.8 GHz | Python             |
-| Linux coreutils sha256sum | 0.000642492268000000 s    | 778.21  H/s    | Intel i7 1.8 GHz | Command Line       |
-| OpenSSL sha256 (CLI)      | 0.002975225151000002 s    | 168.05  H/s    | Intel i7 1.8 GHz | C/C++ Command Line |
-| shasum                    | 0.014810544855000007 s    | 33.75   H/s    | Intel i7 1.8 GHz | Perl               |
+| Library or Tool                | Average Run Time (1 hash) | Hashrate (H/s) | Machine          | Program            |
+|--------------------------------|---------------------------|----------------|------------------|--------------------|
+| WolfSSL sha256                 | 0.000000208375930786 s    | 2.40   MH/s    | Intel i7 1.8 GHz | C++                |
+| Crypto++ sha256                | 0.000000257899368286 s    | 1.94   MH/s    | Intel i7 1.8 GHz | C++                |
+| Bitcoin core's sha256          | 0.000000263093631744 s    | 1.90   MH/s    | Intel i7 1.8 GHz | C++                |
+| Rust sha2 (sha256)             | 0.000000269746296400 s    | 1.85   MH/s    | Intel i7 1.8 GHz | Rust               |
+| Intel Cryptographic primitives | 0.000000390211868286 s    | 1.28   MH/s    | Intel i7 1.8 GHz | C++                |
+| OpenSSL sha256                 | 0.000000474000930786 s    | 1.05   MH/s    | Intel i7 1.8 GHz | C++                |
+| Hashlib (python) sha256        | 0.000000583000000000 s    | 857.63 KH/s    | Intel i7 1.8 GHz | Python             |
+| Linux coreutils sha256sum      | 0.000642492268000000 s    | 778.21  H/s    | Intel i7 1.8 GHz | Command Line       |
+| OpenSSL sha256 (CLI)           | 0.002975225151000002 s    | 168.05  H/s    | Intel i7 1.8 GHz | C/C++ Command Line |
+| shasum                         | 0.014810544855000007 s    | 33.75   H/s    | Intel i7 1.8 GHz | Perl               |
 
 
 For more benchmarks, check out this: [Benchmarks](docs/Benchmarks.md)!
