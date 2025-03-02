@@ -26,7 +26,7 @@ struct Args {
     json_file: String,
 }
 
-fn parse_args(args: Vec<String>) -> Result<Args, lexopt::Error> {
+fn parse_args(args: Vec<String>) -> Result<Args, String> {
     let mut input_file = String::new();
     let mut json_file = String::new();
 
@@ -48,6 +48,10 @@ fn parse_args(args: Vec<String>) -> Result<Args, lexopt::Error> {
             _ => {}
         }
         i += 1;
+    }
+
+    if input_file.is_empty() {
+        return Err("Missing required argument: -input".to_string());
     }
 
     Ok(Args {
