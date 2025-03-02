@@ -1,0 +1,9 @@
+[package]
+name = "rust-sha2-bench"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hex = "0.4.3"
+serde_json = "1.0.139"
+sha2 = "0.10.8"
