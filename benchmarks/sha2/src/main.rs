@@ -80,7 +80,7 @@ fn main() {
     if args.json_file != "" {
         let json_output = json!([
             [
-                "main.rs",
+                file!(),
                 "rust_sha256",
                 avg_time
             ]
