@@ -12,7 +12,7 @@ function(build_benchmark Name)
 
     add_executable(${Name} main.cc)
     set_target_properties(${Name} PROPERTIES
-            BUILD_RPATH "/usr/local/lib"
+            BUILD_RPATH "/usr/local/lib;/usr/local/lib/intel64"
     )
 
     if (VERBOSE)
