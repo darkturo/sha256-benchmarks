@@ -4,18 +4,22 @@ Benchmarking SHA-256 implementations for CPU on GNU/Linux.
 
 ## Motivation
 
-I've been curious about where do sha256 implementations stand in terms of
-performance on either CPU and GPU for a while. I'm aware that this is not a new
-question, and that is majorly accepted that ASICs and FPGAs can do the best in 
-this terrain (We talk hundreds of Terahashes per second).
+I've been curious about where sha256 implementations stand in terms of
+performance on a desktop or server. How many hashes (double hashes) 
+per second can a general purpose hardware (CPU or GPU or mix) achieve 
+as of today?
+
+I'm aware that this is not a new question, and that it is majorly accepted 
+that ASICs and FPGAs can do the best in this terrain. We talk about hundreds
+of Terahashes per second when it comes to the latest ASICs vs a few thousands(?) 
+of hashes per second on a computer for general use.
 
 I've been looking around for an answer to my question but haven't been very
-lucky. How many hashes (double hashes) can we compute per second with a current
-CPU or GPU?  ...
+lucky...
 
 So I have decided to find out myself. 
 
-**DISCLAIMER**: I do not intend to provide an exhaustive benchmark here, this is
+**DISCLAIMER**: I do not intend to provide an exhaustive benchmark here, this
 project is fueled by curiosity and spare time.
 
 
