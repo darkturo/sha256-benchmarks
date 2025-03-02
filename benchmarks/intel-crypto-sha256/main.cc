@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <ippcp.h>
+//#define ENABLE_STDOUT_DEBUG 1
 
 #include "../benchmark.h"
 
@@ -20,7 +21,12 @@ inline int checkStatus(const char* funcName, IppStatus expectedStatus, IppStatus
 template <benchmark::ByteType T>
 void intel_crypto_sha256(const std::string &message, T *digest) {
     IppStatus status = ippStsNoErr;
-    const IppsHashMethod* hash_method = ippsHashMethod_SHA256_NI();
+    //NOTE: So at the moment in my computer I don't seem to have access in runtime to the SHA-NI extensions
+    //      so I'm running this with ippsHashMethod_SHA256(). I could use ippsHashMethod_SHA256_TT() instead
+    //      but for this cases I think the best is to duplicate and have two benchmarks one for intel crypto
+    //      without the extensions, and another one with the extensions, that may not be available (how to know
+    //      before running if I should skip? ... hmmm)
+    const IppsHashMethod* hash_method = ippsHashMethod_SHA256();
 
     int context_size = 0;
     status = ippsHashGetSize_rmf(&context_size);
@@ -31,7 +37,7 @@ void intel_crypto_sha256(const std::string &message, T *digest) {
 #endif
 
     std::vector<Ipp8u> context_buffer(context_size);
-    IppsHashState_rmf* hash_state = (IppsHashState_rmf*)(context_buffer.data());
+    IppsHashState_rmf* hash_state = reinterpret_cast<IppsHashState_rmf*>(context_buffer.data());
     status = ippsHashInit_rmf(hash_state, hash_method);
 #ifdef DEBUG
     if (!checkStatus("ippsHashInit", ippStsNoErr, status)) {
@@ -39,7 +45,7 @@ void intel_crypto_sha256(const std::string &message, T *digest) {
     }
 #endif
 
-    status = ippsHashUpdate_rmf(reinterpret_cast<const Ipp8u *>(message.c_str()), message.size() - 1, hash_state);
+    status = ippsHashUpdate_rmf(reinterpret_cast<const Ipp8u *>(message.c_str()), message.size(), hash_state);
 #ifdef DEBUG
     if (!checkStatus("ippsHashUpdate", ippStsNoErr, status)) {
         return;
