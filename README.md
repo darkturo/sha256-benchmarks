@@ -51,6 +51,7 @@ For more benchmarks, check out this: [Benchmarks](docs/Benchmarks.md)!
 
 The repo is organized as follows:
 
+```
 benchmarks  - Contains both setups and programs to benchmark different implementations. I use hyperfine, 
               pyperf, and custom c++ programs (using Folly) to run the benchmarks.
 results     - Contains logs in json of the benchmarks I've run. These are produced by the different benchmarking
@@ -61,6 +62,7 @@ input       - Contains input file(s) used as input for sha256 algorithms.
 docs        - Markdown stuff, some of it referenced from this README.
 scripts     - Contains a simple script in bash to run the different benchmarks.
 README.md   - This file.
+```
 
 ## Running the Benchmarks
 
