@@ -14,20 +14,20 @@ that ASICs and FPGAs can do the best in this terrain. We talk about hundreds
 of Terahashes per second when it comes to the latest ASICs vs a few thousands(?) 
 of hashes per second on a computer for general use.
 
-I've been looking around for an answer to my question but haven't been very
+I've been looking around for an answer to my question, but haven't been very
 lucky...
 
-So I have decided to find out myself. 
+So I have decided to find out. 
 
-**DISCLAIMER**: I do not intend to provide an exhaustive benchmark here, this
-project is fueled by curiosity and spare time.
+**DISCLAIMER**: I do not intend to provide an exhaustive benchmark here; this
+project, is fueled by curiosity and spare time.
 
 
 ## Findings
 
 ASIC miners today have hashrates in the order of TH/s, this is, they can calculate
 trillion of double Sha256s (SHA-256d [^sha256-d]) per second[^btc-lingo]! 
-Let's find out how far can we get on a CPU/GPU![^machine]
+Let's find out how far we can get on a CPU/GPU![^machine]
 
 ### The top 10 (so far):
 
